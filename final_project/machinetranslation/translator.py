@@ -23,26 +23,30 @@ language_translator.set_service_url(url)
 
 def english_to_french(english_text):
     #write the code here
-    french_text: str
+    french_text: str = ""
     try:
         translation = language_translator.translate(
             text=english_text,
             model_id='en-fr'
         ).get_result()
         french_text = translation['translations'][0]['translation']  # type: ignore
-    except (ApiException, ValueError):
-        return ""
+    except ApiException as ex:
+        print(f"Message returned with error code {ex.code}: {ex.message}")
+    except ValueError as err:
+        print("Invalid input value")
     return french_text
 
 def french_to_english(french_text):
     #write the code here
-    english_text: str
+    english_text: str = ""
     try:
         translation = language_translator.translate(
             text=french_text,
             model_id='fr-en'
         ).get_result()
         english_text = translation['translations'][0]['translation']  # type: ignore
-    except (ApiException, ValueError):
-        return ""
+    except ApiException as ex:
+        print(f"Message returned with error code {ex.code}: {ex.message}")
+    except ValueError as err:
+        print("Invalid input value")
     return english_text
